@@ -43,101 +43,133 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
   };
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6">
-      <div className="flex items-center mb-6">
-        <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-600 rounded-xl flex items-center justify-center mr-3">
-          <span className="text-white text-lg">➕</span>
+    <div className="card-modern p-8 animate-slide-in-up">
+      {/* Header */}
+      <div className="flex items-center mb-8">
+        <div className="relative mr-4">
+          <div className="w-14 h-14 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
+            <span className="text-white text-2xl">➕</span>
+          </div>
+          <div className="absolute -inset-2 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 rounded-2xl blur opacity-25"></div>
         </div>
-        <h3 className="text-xl font-bold text-gray-800">Add Transaction</h3>
+        <div>
+          <h3 className="text-2xl font-bold gradient-text">Add Transaction</h3>
+          <p className="text-gray-600">Record your income or expense</p>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         {/* Amount and Type */}
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Amount</label>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-gray-700">Amount</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+              <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">💵</span>
               <input 
                 type="number" 
                 name="amount" 
                 value={form.amount} 
                 onChange={handleChange} 
                 required 
-                className="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="input-modern w-full pl-12 text-lg"
                 placeholder="0.00"
                 step="0.01"
               />
             </div>
           </div>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Type</label>
-            <select 
-              name="type" 
-              value={form.type} 
-              onChange={handleChange} 
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-            >
-              <option value="expense" className="text-red-600">💸 Expense</option>
-              <option value="income" className="text-green-600">💰 Income</option>
-            </select>
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-gray-700">Type</label>
+            <div className="relative">
+              <select 
+                name="type" 
+                value={form.type} 
+                onChange={handleChange} 
+                className="input-modern w-full pl-12 text-lg appearance-none cursor-pointer"
+              >
+                <option value="expense" className="text-red-600">💸 Expense</option>
+                <option value="income" className="text-green-600">💰 Income</option>
+              </select>
+              <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">
+                {form.type === 'expense' ? '💸' : '💰'}
+              </span>
+              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">▼</span>
+            </div>
           </div>
         </div>
 
         {/* Category */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
-          <div className="grid grid-cols-3 gap-2">
+        <div className="space-y-4">
+          <label className="block text-sm font-semibold text-gray-700">Category</label>
+          <div className="grid grid-cols-3 gap-3">
             {categories.map((cat) => (
               <button
                 key={cat}
                 type="button"
                 onClick={() => setForm({...form, category: cat})}
-                className={`p-3 rounded-xl border-2 transition-all duration-200 ${
+                className={`p-4 rounded-2xl border-2 transition-all duration-300 group hover:scale-105 ${
                   form.category === cat
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
+                    ? 'border-blue-500 bg-gradient-to-r from-blue-50 to-purple-50 shadow-lg'
                     : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                 }`}
               >
-                <div className="text-lg mb-1">{categoryIcons[cat] || '📦'}</div>
-                <div className="text-xs font-medium">{cat}</div>
+                <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-200">
+                  {categoryIcons[cat] || '📦'}
+                </div>
+                <div className="text-xs font-semibold text-gray-700">{cat}</div>
+                {form.category === cat && (
+                  <div className="absolute top-2 right-2 w-3 h-3 bg-blue-500 rounded-full"></div>
+                )}
               </button>
             ))}
           </div>
         </div>
 
         {/* Description */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
-          <input 
-            type="text" 
-            name="description" 
-            value={form.description} 
-            onChange={handleChange} 
-            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-            placeholder="What was this transaction for?"
-            required
-          />
+        <div className="space-y-2">
+          <label className="block text-sm font-semibold text-gray-700">Description</label>
+          <div className="relative">
+            <input 
+              type="text" 
+              name="description" 
+              value={form.description} 
+              onChange={handleChange} 
+              className="input-modern w-full pl-12 text-lg"
+              placeholder="What was this transaction for?"
+              required
+            />
+            <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+              📝
+            </span>
+          </div>
         </div>
 
         {/* Date */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Date</label>
-          <input 
-            type="date" 
-            name="date" 
-            value={form.date} 
-            onChange={handleChange} 
-            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-          />
+        <div className="space-y-2">
+          <label className="block text-sm font-semibold text-gray-700">Date</label>
+          <div className="relative">
+            <input 
+              type="date" 
+              name="date" 
+              value={form.date} 
+              onChange={handleChange} 
+              className="input-modern w-full pl-12 text-lg"
+            />
+            <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+              📅
+            </span>
+          </div>
         </div>
 
         {/* Submit Button */}
         <button 
           type="submit" 
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+          className="btn-primary w-full py-4 text-lg font-semibold relative overflow-hidden group"
         >
-          Add Transaction
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span className="relative flex items-center justify-center space-x-2">
+            <span>✨</span>
+            <span>Add Transaction</span>
+          </span>
         </button>
       </form>
     </div>

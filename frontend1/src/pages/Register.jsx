@@ -27,34 +27,203 @@ const Register = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded shadow">
-      <h2 className="text-xl font-bold mb-4">Register</h2>
-      {error && <div className="text-red-500 mb-2">{error}</div>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-1">Username</label>
-          <input type="text" name="username" value={form.username} onChange={handleChange} required className="input input-bordered w-full" />
+    <div className="min-h-screen flex items-center justify-center px-4 animate-fade-in">
+      <div className="w-full max-w-md">
+        {/* Register Card */}
+        <div className="card-modern p-8 animate-slide-in-up">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="relative inline-block mb-4">
+              <div className="w-20 h-20 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 rounded-3xl flex items-center justify-center shadow-2xl animate-pulse-glow">
+                <span className="text-white text-3xl">🚀</span>
+              </div>
+              <div className="absolute -inset-2 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 rounded-3xl blur opacity-25"></div>
+            </div>
+            <h1 className="text-3xl font-bold gradient-text mb-2">Join Trackify</h1>
+            <p className="text-gray-600">Create your account and start tracking your finances</p>
+          </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 p-4 bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl animate-scale-in">
+              <div className="flex items-center space-x-2">
+                <span className="text-red-500 text-lg">⚠️</span>
+                <span className="text-red-700 font-medium">{error}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Register Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name Fields */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">First Name</label>
+                <div className="relative">
+                  <input 
+                    type="text" 
+                    name="firstName" 
+                    value={form.firstName} 
+                    onChange={handleChange} 
+                    required 
+                    className="input-modern w-full pl-12"
+                    placeholder="John"
+                  />
+                  <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                    👤
+                  </span>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700">Last Name</label>
+                <div className="relative">
+                  <input 
+                    type="text" 
+                    name="lastName" 
+                    value={form.lastName} 
+                    onChange={handleChange} 
+                    required 
+                    className="input-modern w-full pl-12"
+                    placeholder="Doe"
+                  />
+                  <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                    👤
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Username */}
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Username</label>
+              <div className="relative">
+                <input 
+                  type="text" 
+                  name="username" 
+                  value={form.username} 
+                  onChange={handleChange} 
+                  required 
+                  className="input-modern w-full pl-12"
+                  placeholder="johndoe"
+                />
+                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                  🏷️
+                </span>
+              </div>
+            </div>
+
+            {/* Email */}
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Email Address</label>
+              <div className="relative">
+                <input 
+                  type="email" 
+                  name="email" 
+                  value={form.email} 
+                  onChange={handleChange} 
+                  required 
+                  className="input-modern w-full pl-12"
+                  placeholder="john@example.com"
+                />
+                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                  📧
+                </span>
+              </div>
+            </div>
+
+            {/* Password */}
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Password</label>
+              <div className="relative">
+                <input 
+                  type="password" 
+                  name="password" 
+                  value={form.password} 
+                  onChange={handleChange} 
+                  required 
+                  className="input-modern w-full pl-12"
+                  placeholder="Create a strong password"
+                />
+                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                  🔒
+                </span>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button 
+              type="submit" 
+              disabled={loading}
+              className="btn-primary w-full py-4 text-lg font-semibold relative overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <span className="relative flex items-center justify-center space-x-2">
+                {loading ? (
+                  <>
+                    <div className="spinner w-5 h-5"></div>
+                    <span>Creating account...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>✨</span>
+                    <span>Create Account</span>
+                  </>
+                )}
+              </span>
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="my-6 flex items-center">
+            <div className="flex-1 border-t border-gray-200"></div>
+            <span className="px-4 text-gray-500 text-sm">or</span>
+            <div className="flex-1 border-t border-gray-200"></div>
+          </div>
+
+          {/* Login Link */}
+          <div className="text-center">
+            <p className="text-gray-600">
+              Already have an account?{' '}
+              <Link 
+                to="/login" 
+                className="gradient-text font-semibold hover:underline transition-all duration-200 hover:scale-105 inline-block"
+              >
+                Sign in here
+              </Link>
+            </p>
+          </div>
+
+          {/* Benefits */}
+          <div className="mt-8 pt-6 border-t border-gray-100">
+            <h4 className="text-center text-sm font-semibold text-gray-700 mb-4">Why choose Trackify?</h4>
+            <div className="grid grid-cols-2 gap-4 text-center">
+              <div className="space-y-2">
+                <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg flex items-center justify-center mx-auto">
+                  <span className="text-white text-sm">📊</span>
+                </div>
+                <p className="text-xs text-gray-600">Smart Analytics</p>
+              </div>
+              <div className="space-y-2">
+                <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg flex items-center justify-center mx-auto">
+                  <span className="text-white text-sm">🔒</span>
+                </div>
+                <p className="text-xs text-gray-600">Secure Data</p>
+              </div>
+              <div className="space-y-2">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center mx-auto">
+                  <span className="text-white text-sm">⚡</span>
+                </div>
+                <p className="text-xs text-gray-600">Real-time Sync</p>
+              </div>
+              <div className="space-y-2">
+                <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center mx-auto">
+                  <span className="text-white text-sm">🎯</span>
+                </div>
+                <p className="text-xs text-gray-600">Goal Tracking</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <label className="block mb-1">Email</label>
-          <input type="email" name="email" value={form.email} onChange={handleChange} required className="input input-bordered w-full" />
-        </div>
-        <div>
-          <label className="block mb-1">Password</label>
-          <input type="password" name="password" value={form.password} onChange={handleChange} required className="input input-bordered w-full" />
-        </div>
-        <div>
-          <label className="block mb-1">First Name</label>
-          <input type="text" name="firstName" value={form.firstName} onChange={handleChange} required className="input input-bordered w-full" />
-        </div>
-        <div>
-          <label className="block mb-1">Last Name</label>
-          <input type="text" name="lastName" value={form.lastName} onChange={handleChange} required className="input input-bordered w-full" />
-        </div>
-        <button type="submit" className="btn btn-primary w-full" disabled={loading}>{loading ? 'Registering...' : 'Register'}</button>
-      </form>
-      <div className="mt-4 text-center">
-        Already have an account? <Link to="/login" className="text-blue-600 hover:underline">Login</Link>
       </div>
     </div>
   );

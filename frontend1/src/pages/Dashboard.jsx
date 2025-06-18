@@ -92,27 +92,34 @@ const Dashboard = () => {
 
   if (expenseLoading || budgetLoading) {
     return (
-      <div className="flex justify-center items-center h-64">
+      <div className="flex justify-center items-center h-64 animate-fade-in">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <div className="text-lg text-gray-600">Loading your financial data...</div>
+          <div className="relative">
+            <div className="w-20 h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+            <div className="absolute inset-0 w-20 h-20 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto" style={{ animationDelay: '0.5s' }}></div>
+          </div>
+          <div className="text-xl text-white font-semibold mb-2">Loading your financial data...</div>
+          <div className="text-white/70">Please wait while we fetch your latest information</div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-          Financial Dashboard
-        </h1>
-        <p className="text-gray-600">Track your expenses and manage your budget</p>
+      <div className="text-center mb-12 animate-slide-in-up">
+        <div className="relative inline-block mb-6">
+          <h1 className="text-5xl font-bold gradient-text mb-4">
+            Financial Dashboard
+          </h1>
+          <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 blur opacity-20"></div>
+        </div>
+        <p className="text-white/80 text-lg">Track your expenses and manage your budget with smart insights</p>
       </div>
 
       {/* Budget Section */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 animate-slide-in-up" style={{ animationDelay: '0.1s' }}>
         <BudgetCard 
           totalBudget={totalBudget} 
           totalSpent={totalSpent} 
@@ -120,30 +127,50 @@ const Dashboard = () => {
         />
         <button
           onClick={() => setShowBudgetForm(!showBudgetForm)}
-          className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+          className="btn-secondary px-8 py-4 text-lg font-semibold relative overflow-hidden group"
         >
-          {showBudgetForm ? 'Cancel' : 'Set Budget'}
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <span className="relative flex items-center space-x-2">
+            <span>{showBudgetForm ? '❌' : '💰'}</span>
+            <span>{showBudgetForm ? 'Cancel' : 'Set Budget'}</span>
+          </span>
         </button>
       </div>
 
       {/* Budget Form */}
       {showBudgetForm && (
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Set Monthly Budget</h3>
-          <form onSubmit={handleBudgetSubmit} className="flex gap-4">
-            <input
-              type="number"
-              value={budgetForm.totalBudget}
-              onChange={(e) => setBudgetForm({ totalBudget: e.target.value })}
-              placeholder="Enter budget amount"
-              className="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-              required
-            />
+        <div className="card-modern p-8 animate-scale-in">
+          <div className="flex items-center mb-6">
+            <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mr-4">
+              <span className="text-white text-2xl">📊</span>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold gradient-text">Set Monthly Budget</h3>
+              <p className="text-gray-600">Define your spending limit for this month</p>
+            </div>
+          </div>
+          <form onSubmit={handleBudgetSubmit} className="flex flex-col lg:flex-row gap-4">
+            <div className="flex-1 relative">
+              <input
+                type="number"
+                value={budgetForm.totalBudget}
+                onChange={(e) => setBudgetForm({ totalBudget: e.target.value })}
+                placeholder="Enter budget amount"
+                className="input-modern w-full pl-12 text-lg"
+                required
+              />
+              <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">
+                💵
+              </span>
+            </div>
             <button
               type="submit"
-              className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="btn-primary px-8 py-4 text-lg font-semibold"
             >
-              Save Budget
+              <span className="flex items-center space-x-2">
+                <span>💾</span>
+                <span>Save Budget</span>
+              </span>
             </button>
           </form>
         </div>
@@ -151,9 +178,14 @@ const Dashboard = () => {
 
       {/* Error Messages */}
       {(expenseError || budgetError) && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-xl">
-          {expenseError && <div className="font-semibold">Expense Error: {expenseError}</div>}
-          {budgetError && <div className="font-semibold">Budget Error: {budgetError}</div>}
+        <div className="card-modern p-6 border-l-4 border-red-500 animate-scale-in">
+          <div className="flex items-center space-x-3">
+            <span className="text-red-500 text-2xl">⚠️</span>
+            <div>
+              {expenseError && <div className="font-semibold text-red-700">Expense Error: {expenseError}</div>}
+              {budgetError && <div className="font-semibold text-red-700">Budget Error: {budgetError}</div>}
+            </div>
+          </div>
         </div>
       )}
 
@@ -161,34 +193,48 @@ const Dashboard = () => {
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Left Column - Form and List */}
         <div className="lg:col-span-2 space-y-8">
-          <ExpenseForm onSubmit={handleExpenseSubmit} />
-          <ExpenseList 
-            expenses={expenses} 
-            onEdit={handleExpenseEdit}
-            onDelete={handleExpenseDelete}
-          />
+          <div className="animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
+            <ExpenseForm onSubmit={handleExpenseSubmit} />
+          </div>
+          <div className="animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
+            <ExpenseList 
+              expenses={expenses} 
+              onEdit={handleExpenseEdit}
+              onDelete={handleExpenseDelete}
+            />
+          </div>
         </div>
         
         {/* Right Column - Charts */}
         <div className="space-y-8">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6">
-            <div className="flex items-center mb-4">
-              <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white text-sm">📊</span>
+          <div className="animate-slide-in-up" style={{ animationDelay: '0.4s' }}>
+            <div className="card-modern p-6">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4">
+                  <span className="text-white text-xl">📊</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-800">Spending by Category</h3>
+                  <p className="text-gray-600 text-sm">Visual breakdown of expenses</p>
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-gray-800">Spending by Category</h3>
+              <ExpensePieChart data={pieData} />
             </div>
-            <ExpensePieChart data={pieData} />
           </div>
           
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-6">
-            <div className="flex items-center mb-4">
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-white text-sm">📈</span>
+          <div className="animate-slide-in-up" style={{ animationDelay: '0.5s' }}>
+            <div className="card-modern p-6">
+              <div className="flex items-center mb-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mr-4">
+                  <span className="text-white text-xl">📈</span>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-800">Monthly Trends</h3>
+                  <p className="text-gray-600 text-sm">Track your spending patterns</p>
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-gray-800">Monthly Trends</h3>
+              <ExpenseBarChart data={barData} />
             </div>
-            <ExpenseBarChart data={barData} />
           </div>
         </div>
       </div>
