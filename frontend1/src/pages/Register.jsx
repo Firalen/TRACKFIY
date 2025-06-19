@@ -66,10 +66,10 @@ const Register = () => {
                     value={form.firstName} 
                     onChange={handleChange} 
                     required 
-                    className="input-modern w-full pl-12"
+                    className="input-modern w-full"
                     placeholder="John"
                   />
-                  <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                  <span className="input-icon">
                     👤
                   </span>
                 </div>
@@ -83,10 +83,10 @@ const Register = () => {
                     value={form.lastName} 
                     onChange={handleChange} 
                     required 
-                    className="input-modern w-full pl-12"
+                    className="input-modern w-full"
                     placeholder="Doe"
                   />
-                  <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                  <span className="input-icon">
                     👤
                   </span>
                 </div>
@@ -103,10 +103,10 @@ const Register = () => {
                   value={form.username} 
                   onChange={handleChange} 
                   required 
-                  className="input-modern w-full pl-12"
+                  className="input-modern w-full"
                   placeholder="johndoe"
                 />
-                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                <span className="input-icon">
                   🏷️
                 </span>
               </div>
@@ -122,10 +122,10 @@ const Register = () => {
                   value={form.email} 
                   onChange={handleChange} 
                   required 
-                  className="input-modern w-full pl-12"
+                  className="input-modern w-full"
                   placeholder="john@example.com"
                 />
-                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                <span className="input-icon">
                   📧
                 </span>
               </div>
@@ -141,10 +141,10 @@ const Register = () => {
                   value={form.password} 
                   onChange={handleChange} 
                   required 
-                  className="input-modern w-full pl-12"
+                  className="input-modern w-full"
                   placeholder="Create a strong password"
                 />
-                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                <span className="input-icon">
                   🔒
                 </span>
               </div>

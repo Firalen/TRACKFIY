@@ -55,10 +55,10 @@ const Login = () => {
                   value={email} 
                   onChange={e => { setEmail(e.target.value); clearError(); }} 
                   required 
-                  className="input-modern w-full pl-12"
+                  className="input-modern w-full"
                   placeholder="Enter your email"
                 />
-                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                <span className="input-icon">
                   📧
                 </span>
               </div>
@@ -74,10 +74,10 @@ const Login = () => {
                   value={password} 
                   onChange={e => { setPassword(e.target.value); clearError(); }} 
                   required 
-                  className="input-modern w-full pl-12"
+                  className="input-modern w-full"
                   placeholder="Enter your password"
                 />
-                <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
+                <span className="input-icon">
                   🔒
                 </span>
               </div>
