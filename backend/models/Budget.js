@@ -9,25 +9,13 @@ const budgetSchema = new mongoose.Schema({
   month: {
     type: String,
     required: true,
-    format: 'YYYY-MM'
+    match: [/^\d{4}-(0[1-9]|1[0-2])$/, 'Month must be in YYYY-MM format'] // ✅ Regex format check
   },
   totalBudget: {
     type: Number,
     required: true,
-    min: 0
+    min: [0, 'Total budget cannot be negative'] // ✅ Clear validation
   },
-  categories: [{
-    category: {
-      type: String,
-      required: true,
-      enum: ['Food', 'Transport', 'Rent', 'Entertainment', 'Shopping', 'Healthcare', 'Education', 'Utilities', 'Other']
-    },
-    amount: {
-      type: Number,
-      required: true,
-      min: 0
-    }
-  }],
   isActive: {
     type: Boolean,
     default: true
@@ -36,7 +24,7 @@ const budgetSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Compound index to ensure unique budget per user per month
+// ✅ Compound index: one budget per user per month
 budgetSchema.index({ user: 1, month: 1 }, { unique: true });
 
-module.exports = mongoose.model('Budget', budgetSchema); 
+module.exports = mongoose.model('Budget', budgetSchema);

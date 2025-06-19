@@ -7,7 +7,6 @@ const Expense = require('../models/Expense');
 const getCurrentBudget = async (req, res) => {
   try {
     const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM format
-    
     let budget = await Budget.findOne({ 
       user: req.user._id, 
       month: currentMonth 
@@ -18,16 +17,14 @@ const getCurrentBudget = async (req, res) => {
       budget = await Budget.create({
         user: req.user._id,
         month: currentMonth,
-        totalBudget: 0,
-        categories: []
+        totalBudget: 0
       });
     }
 
-    // Get actual expenses for the month
+    // Get total expenses for the month
     const startDate = new Date(currentMonth + '-01');
     const endDate = new Date(new Date(startDate).setMonth(startDate.getMonth() + 1));
-    
-    const expenses = await Expense.aggregate([
+    const totalSpent = await Expense.aggregate([
       {
         $match: {
           user: req.user._id,
@@ -36,19 +33,16 @@ const getCurrentBudget = async (req, res) => {
       },
       {
         $group: {
-          _id: '$category',
+          _id: null,
           total: { $sum: '$amount' }
         }
       }
-    ]);
-
-    const totalSpent = expenses.reduce((sum, exp) => sum + exp.total, 0);
+    ]).then(result => (result[0]?.total || 0));
 
     res.json({
-      budget,
+      totalBudget: budget.totalBudget,
       totalSpent,
-      remaining: budget.totalBudget - totalSpent,
-      categoryExpenses: expenses
+      remaining: budget.totalBudget - totalSpent
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -60,29 +54,27 @@ const getCurrentBudget = async (req, res) => {
 // @access  Private
 const createBudget = async (req, res) => {
   try {
-    const { month, totalBudget, categories } = req.body;
+    const { totalBudget } = req.body;
+    if (totalBudget === undefined || totalBudget === null) {
+      return res.status(400).json({ message: 'Total budget is required' });
+    }
+    if (typeof totalBudget !== 'number' || isNaN(totalBudget)) {
+      return res.status(400).json({ message: 'Total budget must be a valid number' });
+    }
+    if (totalBudget < 0) {
+      return res.status(400).json({ message: 'Total budget cannot be negative' });
+    }
+    // Always set the month here!
+    const month = new Date().toISOString().slice(0, 7); // YYYY-MM format
 
-    // Check if budget already exists for the month
-    let budget = await Budget.findOne({ 
-      user: req.user._id, 
-      month 
-    });
-
+    let budget = await Budget.findOne({ user: req.user._id, month });
     if (budget) {
-      // Update existing budget
       budget.totalBudget = totalBudget;
-      budget.categories = categories;
       await budget.save();
     } else {
-      // Create new budget
-      budget = await Budget.create({
-        user: req.user._id,
-        month,
-        totalBudget,
-        categories
-      });
+      // This is the critical line: month is always included!
+      budget = await Budget.create({ user: req.user._id, month, totalBudget });
     }
-
     res.status(201).json(budget);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -94,15 +86,10 @@ const createBudget = async (req, res) => {
 // @access  Private
 const getBudgetByMonth = async (req, res) => {
   try {
-    const budget = await Budget.findOne({ 
-      user: req.user._id, 
-      month: req.params.month 
-    });
-
+    const budget = await Budget.findOne({ user: req.user._id, month: req.params.month });
     if (!budget) {
       return res.status(404).json({ message: 'Budget not found for this month' });
     }
-
     res.json(budget);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -117,7 +104,6 @@ const getBudgetHistory = async (req, res) => {
     const budgets = await Budget.find({ user: req.user._id })
       .sort({ month: -1 })
       .limit(12); // Last 12 months
-
     res.json(budgets);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -130,16 +116,12 @@ const getBudgetHistory = async (req, res) => {
 const deleteBudget = async (req, res) => {
   try {
     const budget = await Budget.findById(req.params.id);
-
     if (!budget) {
       return res.status(404).json({ message: 'Budget not found' });
     }
-
-    // Check if budget belongs to user
     if (budget.user.toString() !== req.user._id.toString()) {
       return res.status(401).json({ message: 'Not authorized' });
     }
-
     await budget.deleteOne();
     res.json({ message: 'Budget removed' });
   } catch (error) {

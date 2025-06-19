@@ -198,8 +198,8 @@ const Reports = () => {
             <div className="absolute -inset-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl blur opacity-25"></div>
           </div>
           <div>
-            <h3 className="text-2xl font-bold gradient-text">Transaction Details</h3>
-            <p className="text-gray-600">Complete list of your transactions</p>
+            <h3 className="text-2xl font-bold text-white">Transaction Details</h3>
+            <p className="text-white">Complete list of your transactions</p>
           </div>
         </div>
         
@@ -220,7 +220,7 @@ const Reports = () => {
                   className="hover:bg-gray-50/50 transition-all duration-300 animate-slide-in-up"
                   style={{ animationDelay: `${0.5 + index * 0.05}s` }}
                 >
-                  <td className="px-6 py-4 text-gray-700">
+                  <td className="px-6 py-4 text-white">
                     {new Date(expense.date).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4">
@@ -228,7 +228,7 @@ const Reports = () => {
                       {expense.category}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-gray-800 font-medium">{expense.description}</td>
+                  <td className="px-6 py-4 text-white font-medium">{expense.description}</td>
                   <td className="px-6 py-4 text-right font-bold text-red-600 text-lg">
                     -{formatAmount(expense.amount)}
                   </td>

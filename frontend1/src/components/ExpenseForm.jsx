@@ -53,8 +53,8 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
           <div className="absolute -inset-2 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 rounded-2xl blur opacity-25"></div>
         </div>
         <div>
-          <h3 className="text-2xl font-bold gradient-text">Add Transaction</h3>
-          <p className="text-gray-600">Record your income or expense</p>
+          <h3 className="text-2xl text-red-600 font-bold text-white">Add Transaction</h3>
+          <p className="text-white">Record your income or expense</p>
         </div>
       </div>
 

@@ -1,32 +1,22 @@
 import { create } from 'zustand';
 import { budgetService } from '../services/budgetService';
 
-const useBudgetStore = create((set, get) => ({
-  budgets: [],
-  currentBudget: null,
-  budgetHistory: [],
+const useBudgetStore = create((set) => ({
+  budget: null,
   loading: false,
   error: null,
 
-  // Fetch all budgets
+  // Fetch current budget
   fetchBudgets: async () => {
     set({ loading: true, error: null });
     try {
-      const budgets = await budgetService.getBudgetHistory();
-      set({ budgets, loading: false });
+      const response = await budgetService.getCurrentBudget();
+      set({ budget: response, loading: false });
     } catch (error) {
-      set({ error: error.message, loading: false });
-    }
-  },
-
-  // Fetch current budget
-  fetchCurrentBudget: async () => {
-    set({ loading: true, error: null });
-    try {
-      const budgetData = await budgetService.getCurrentBudget();
-      set({ currentBudget: budgetData, loading: false });
-    } catch (error) {
-      set({ error: error.message, loading: false });
+      set({ 
+        error: error.response?.data?.message || 'Failed to fetch budget', 
+        loading: false 
+      });
     }
   },
 
@@ -35,26 +25,14 @@ const useBudgetStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const budget = await budgetService.createBudget(budgetData);
-      set(state => ({
-        budgets: [...state.budgets, budget],
-        currentBudget: budget,
-        loading: false
-      }));
+      set({ budget, loading: false });
       return { success: true };
     } catch (error) {
-      set({ error: error.message, loading: false });
+      set({ 
+        error: error.response?.data?.message || 'Failed to set budget', 
+        loading: false 
+      });
       return { success: false, error: error.message };
-    }
-  },
-
-  // Fetch budget history
-  fetchBudgetHistory: async () => {
-    set({ loading: true, error: null });
-    try {
-      const history = await budgetService.getBudgetHistory();
-      set({ budgetHistory: history, loading: false });
-    } catch (error) {
-      set({ error: error.message, loading: false });
     }
   },
 
