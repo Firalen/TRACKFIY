@@ -2,17 +2,16 @@
 
 /* Custom CSS Variables */
 :root {
-  --primary-gradient: linear-gradient(135deg, #6b8cce 0%, #8b7aa5 100%);
-  --secondary-gradient: linear-gradient(135deg, #e4b5e9 0%, #e6a0a7 100%);
-  --success-gradient: linear-gradient(135deg, #7cc2e7 0%, #86d4db 100%);
-  --warning-gradient: linear-gradient(135deg, #f3b8c4 0%, #f5dba3 100%);
-  --danger-gradient: linear-gradient(135deg, #ffb7b7 0%, #ffe4e9 100%);
-  --glass-bg: rgba(255, 255, 255, 0.98);
-  --glass-border: rgba(200, 200, 200, 0.3);
-  --soft-blue: #6b8cce;
-  --soft-purple: #8b7aa5;
-  --soft-green: #7cc2e7;
-  --soft-pink: #e4b5e9;
+  --primary: #4a6fa5;
+  --primary-light: #6b8cce;
+  --secondary: #8b7aa5;
+  --text-dark: #2d3748;
+  --text-medium: #4a5568;
+  --text-light: #718096;
+  --background: #f7fafc;
+  --white: #ffffff;
+  --border: #e2e8f0;
+  --error: #fc8181;
 }
 
 /* Global Styles */
@@ -22,10 +21,10 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, #f0f4ff 0%, #f5f3f7 100%);
+  background: var(--background);
   min-height: 100vh;
   overflow-x: hidden;
-  color: #1a1a1a;
+  color: var(--text-dark);
 }
 
 /* Custom Animations */
@@ -122,59 +121,62 @@ body {
 
 /* Button Styles */
 .btn-primary {
-  background: var(--primary-gradient);
+  background: var(--primary);
   border: none;
-  color: white;
+  color: var(--white);
   padding: 12px 24px;
-  border-radius: 12px;
+  border-radius: 8px;
   font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(107, 140, 206, 0.3);
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(107, 140, 206, 0.4);
+  background: var(--primary-light);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .btn-secondary {
-  background: #ffffff;
-  border: 1px solid rgba(107, 140, 206, 0.3);
-  color: #1a1a1a;
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--text-dark);
   padding: 12px 24px;
-  border-radius: 12px;
+  border-radius: 8px;
   font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn-secondary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  border-color: rgba(107, 140, 206, 0.5);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Input Styles */
 .input-modern {
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 12px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
   padding: 12px 16px 12px 40px;
   font-size: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  color: #1a1a1a;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  color: var(--text-dark);
+  width: 100%;
 }
 
 .input-modern::placeholder {
-  color: #666;
+  color: var(--text-light);
 }
 
 .input-modern:focus {
   outline: none;
-  border-color: #6b8cce;
-  box-shadow: 0 0 0 2px rgba(107, 140, 206, 0.15);
-  background: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.1);
+  background: var(--white);
 }
 
 .input-icon {
@@ -182,24 +184,23 @@ body {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #666;
-  opacity: 0.7;
+  color: var(--text-light);
+  opacity: 0.8;
   font-size: 16px;
   pointer-events: none;
 }
 
 /* Card Styles */
 .card-modern {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
 }
 
 .card-modern:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 /* Gradient Text */
@@ -219,17 +220,25 @@ body {
 
 /* Loading Spinner */
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(255, 255, 255, 0.3);
-  border-top: 4px solid #667eea;
+  border: 3px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  border-top-color: var(--white);
+  width: 24px;
+  height: 24px;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Error States */
+.error-text {
+  color: var(--error);
+}
+
+.error-border {
+  border-color: var(--error);
 }
 
 /* Responsive Design */
@@ -246,18 +255,30 @@ body {
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   :root {
-    --glass-bg: rgba(0, 0, 0, 0.25);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --background: #1a202c;
+    --text-dark: #f7fafc;
+    --text-medium: #e2e8f0;
+    --text-light: #a0aec0;
+    --border: #2d3748;
+    --white: #2d3748;
   }
   
   .input-modern {
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
+    background: #2d3748;
+    color: #f7fafc;
+  }
+  
+  .input-modern::placeholder {
+    color: #a0aec0;
   }
   
   .card-modern {
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
+    background: #2d3748;
+  }
+  
+  .btn-secondary {
+    background: #2d3748;
+    color: #f7fafc;
   }
 }
 

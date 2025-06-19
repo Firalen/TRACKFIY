@@ -108,17 +108,15 @@ const Dashboard = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="text-center mb-12 animate-slide-in-up">
-        <div className="relative inline-block mb-6">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Financial Dashboard
-          </h1>
-        </div>
-        <p className="text-gray-700 text-lg">Track your expenses and manage your budget with smart insights</p>
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-text-dark mb-4">
+          Financial Dashboard
+        </h1>
+        <p className="text-text-medium text-lg">Track your expenses and manage your budget with smart insights</p>
       </div>
 
       {/* Budget Section */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 animate-slide-in-up" style={{ animationDelay: '0.1s' }}>
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
         <BudgetCard 
           totalBudget={totalBudget} 
           totalSpent={totalSpent} 
@@ -126,9 +124,9 @@ const Dashboard = () => {
         />
         <button
           onClick={() => setShowBudgetForm(!showBudgetForm)}
-          className="btn-secondary px-8 py-4 text-lg font-semibold relative overflow-hidden group"
+          className="btn-secondary px-8 py-4 text-lg font-semibold"
         >
-          <span className="relative flex items-center space-x-2 text-gray-800">
+          <span className="flex items-center space-x-2">
             <span>{showBudgetForm ? '❌' : '💰'}</span>
             <span>{showBudgetForm ? 'Cancel' : 'Set Budget'}</span>
           </span>
@@ -137,14 +135,14 @@ const Dashboard = () => {
 
       {/* Budget Form */}
       {showBudgetForm && (
-        <div className="card-modern p-8 animate-scale-in">
+        <div className="card-modern p-8">
           <div className="flex items-center mb-6">
-            <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center mr-4">
+            <div className="w-12 h-12 bg-background rounded-lg flex items-center justify-center mr-4">
               <span className="text-2xl">📊</span>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900">Set Monthly Budget</h3>
-              <p className="text-gray-700">Define your spending limit for this month</p>
+              <h3 className="text-2xl font-bold text-text-dark">Set Monthly Budget</h3>
+              <p className="text-text-medium">Define your spending limit for this month</p>
             </div>
           </div>
           <form onSubmit={handleBudgetSubmit} className="flex flex-col lg:flex-row gap-4">
@@ -154,7 +152,7 @@ const Dashboard = () => {
                 value={budgetForm.totalBudget}
                 onChange={(e) => setBudgetForm({ totalBudget: e.target.value })}
                 placeholder="Enter budget amount"
-                className="input-modern w-full text-gray-900"
+                className="input-modern"
                 required
               />
               <span className="input-icon">
@@ -176,12 +174,12 @@ const Dashboard = () => {
 
       {/* Error Messages */}
       {(expenseError || budgetError) && (
-        <div className="card-modern p-6 border-l-4 border-red-400 animate-scale-in bg-red-50">
+        <div className="card-modern p-6 border-l-4 border-error bg-white">
           <div className="flex items-center space-x-3">
-            <span className="text-red-500 text-2xl">⚠️</span>
+            <span className="text-error text-2xl">⚠️</span>
             <div>
-              {expenseError && <div className="font-semibold text-red-700">Expense Error: {expenseError}</div>}
-              {budgetError && <div className="font-semibold text-red-700">Budget Error: {budgetError}</div>}
+              {expenseError && <div className="font-semibold text-error">Expense Error: {expenseError}</div>}
+              {budgetError && <div className="font-semibold text-error">Budget Error: {budgetError}</div>}
             </div>
           </div>
         </div>
@@ -191,10 +189,10 @@ const Dashboard = () => {
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Left Column - Form and List */}
         <div className="lg:col-span-2 space-y-8">
-          <div className="animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
+          <div>
             <ExpenseForm onSubmit={handleExpenseSubmit} />
           </div>
-          <div className="animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
+          <div>
             <ExpenseList 
               expenses={expenses} 
               onEdit={handleExpenseEdit}
@@ -205,34 +203,14 @@ const Dashboard = () => {
         
         {/* Right Column - Charts */}
         <div className="space-y-8">
-          <div className="animate-slide-in-up" style={{ animationDelay: '0.4s' }}>
-            <div className="card-modern p-6">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4">
-                  <span className="text-white text-xl">📊</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-800">Spending by Category</h3>
-                  <p className="text-gray-600 text-sm">Visual breakdown of expenses</p>
-                </div>
-              </div>
-              <ExpensePieChart data={pieData} />
-            </div>
+          <div className="card-modern p-6">
+            <h3 className="text-xl font-bold text-text-dark mb-4">Expense Distribution</h3>
+            <ExpensePieChart data={pieData} />
           </div>
           
-          <div className="animate-slide-in-up" style={{ animationDelay: '0.5s' }}>
-            <div className="card-modern p-6">
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mr-4">
-                  <span className="text-white text-xl">📈</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-800">Monthly Trends</h3>
-                  <p className="text-gray-600 text-sm">Track your spending patterns</p>
-                </div>
-              </div>
-              <ExpenseBarChart data={barData} />
-            </div>
+          <div className="card-modern p-6">
+            <h3 className="text-xl font-bold text-text-dark mb-4">Monthly Trend</h3>
+            <ExpenseBarChart data={barData} />
           </div>
         </div>
       </div>
