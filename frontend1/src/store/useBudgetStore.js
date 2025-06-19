@@ -2,10 +2,22 @@ import { create } from 'zustand';
 import { budgetService } from '../services/budgetService';
 
 const useBudgetStore = create((set, get) => ({
+  budgets: [],
   currentBudget: null,
   budgetHistory: [],
   loading: false,
   error: null,
+
+  // Fetch all budgets
+  fetchBudgets: async () => {
+    set({ loading: true, error: null });
+    try {
+      const budgets = await budgetService.getBudgetHistory();
+      set({ budgets, loading: false });
+    } catch (error) {
+      set({ error: error.message, loading: false });
+    }
+  },
 
   // Fetch current budget
   fetchCurrentBudget: async () => {
@@ -23,7 +35,11 @@ const useBudgetStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const budget = await budgetService.createBudget(budgetData);
-      set({ currentBudget: budget, loading: false });
+      set(state => ({
+        budgets: [...state.budgets, budget],
+        currentBudget: budget,
+        loading: false
+      }));
       return { success: true };
     } catch (error) {
       set({ error: error.message, loading: false });

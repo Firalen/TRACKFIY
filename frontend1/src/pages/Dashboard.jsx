@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/useAuthStore';
 import useBudgetStore from '../store/useBudgetStore';
@@ -11,24 +11,34 @@ import ExpenseBarChart from '../components/Charts/ExpenseBarChart';
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  const { budgets, fetchBudgets } = useBudgetStore();
-  const { expenses, fetchExpenses } = useExpenseStore();
+  const { budgets, loading: budgetsLoading, error: budgetsError, fetchBudgets } = useBudgetStore();
+  const { expenses, loading: expensesLoading, error: expensesError, fetchExpenses } = useExpenseStore();
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     if (!user) {
       navigate('/login');
       return;
     }
-    fetchBudgets();
-    fetchExpenses();
+
+    const loadData = async () => {
+      try {
+        await Promise.all([
+          fetchBudgets(),
+          fetchExpenses()
+        ]);
+      } catch (error) {
+        console.error('Error loading dashboard data:', error);
+      } finally {
+        setIsInitialLoad(false);
+      }
+    };
+
+    loadData();
   }, [user, navigate, fetchBudgets, fetchExpenses]);
 
-  // Initialize with safe default values
-  const totalBudget = budgets?.reduce((acc, budget) => acc + budget.amount, 0) || 0;
-  const totalExpenses = expenses?.reduce((acc, expense) => acc + expense.amount, 0) || 0;
-  const remainingBudget = totalBudget - totalExpenses;
-
-  if (!budgets || !expenses) {
+  // Show loading state on initial load
+  if (isInitialLoad || budgetsLoading || expensesLoading) {
     return (
       <div className="p-6 max-w-7xl mx-auto">
         <div className="flex items-center justify-center h-64">
@@ -37,6 +47,24 @@ const Dashboard = () => {
       </div>
     );
   }
+
+  // Show error state if either budgets or expenses failed to load
+  if (budgetsError || expensesError) {
+    return (
+      <div className="p-6 max-w-7xl mx-auto">
+        <div className="flex items-center justify-center h-64">
+          <p className="text-error">
+            Error loading dashboard data. Please try again later.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Initialize with safe default values
+  const totalBudget = budgets?.reduce((acc, budget) => acc + budget.amount, 0) || 0;
+  const totalExpenses = expenses?.reduce((acc, expense) => acc + expense.amount, 0) || 0;
+  const remainingBudget = totalBudget - totalExpenses;
 
   return (
     <div className="p-6 max-w-7xl mx-auto text-white">
