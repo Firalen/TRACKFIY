@@ -5,7 +5,7 @@ import useBudgetStore from '../store/useBudgetStore';
 import useExpenseStore from '../store/useExpenseStore';
 import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
-import { ExpensePieChart } from '../components/Charts/ExpensePieChart';
+import ExpensePieChart from '../components/Charts/ExpensePieChart';
 import ExpenseBarChart from '../components/Charts/ExpenseBarChart';
 
 const Dashboard = () => {
@@ -23,14 +23,25 @@ const Dashboard = () => {
     fetchExpenses();
   }, [user, navigate, fetchBudgets, fetchExpenses]);
 
-  const totalBudget = budgets.reduce((acc, budget) => acc + budget.amount, 0);
-  const totalExpenses = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+  // Initialize with safe default values
+  const totalBudget = budgets?.reduce((acc, budget) => acc + budget.amount, 0) || 0;
+  const totalExpenses = expenses?.reduce((acc, expense) => acc + expense.amount, 0) || 0;
   const remainingBudget = totalBudget - totalExpenses;
+
+  if (!budgets || !expenses) {
+    return (
+      <div className="p-6 max-w-7xl mx-auto">
+        <div className="flex items-center justify-center h-64">
+          <p className="text-white opacity-80">Loading dashboard data...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 max-w-7xl mx-auto text-white">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2 text-white">Welcome back, {user?.name}</h1>
+        <h1 className="text-3xl font-bold mb-2 text-white">Welcome back, {user?.name || 'User'}</h1>
         <p className="text-base text-white opacity-90">Track your expenses and stay within budget</p>
       </div>
 

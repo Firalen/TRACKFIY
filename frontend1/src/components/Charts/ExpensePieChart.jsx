@@ -1,23 +1,39 @@
-const ExpensePieChart = ({ data }) => {
-  if (!data || data.length === 0) {
+import React from 'react';
+
+const ExpensePieChart = ({ expenses }) => {
+  if (!expenses || expenses.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64 bg-gray-50 rounded">
-        <p className="text-gray-500">No data available</p>
+      <div className="flex items-center justify-center h-64">
+        <p className="text-white opacity-80">No data available</p>
       </div>
     );
   }
 
+  // Process expenses data to get category totals
+  const categoryData = expenses.reduce((acc, expense) => {
+    if (!acc[expense.category]) {
+      acc[expense.category] = 0;
+    }
+    acc[expense.category] += expense.amount;
+    return acc;
+  }, {});
+
+  const data = Object.entries(categoryData).map(([category, total]) => ({
+    category,
+    total
+  }));
+
   const total = data.reduce((sum, item) => sum + item.total, 0);
   const colors = [
-    '#6b8cce', // soft blue
-    '#7cc2e7', // soft cyan
-    '#8b7aa5', // soft purple
-    '#e4b5e9', // soft pink
-    '#86d4db', // soft teal
-    '#b5c9e4', // light blue
-    '#c4b5e4', // light purple
-    '#e4d5b5', // soft beige
-    '#b5e4d5'  // soft mint
+    '#60A5FA', // blue
+    '#34D399', // green
+    '#A78BFA', // purple
+    '#F472B6', // pink
+    '#FBBF24', // yellow
+    '#818CF8', // indigo
+    '#F87171', // red
+    '#2DD4BF', // teal
+    '#C084FC'  // violet
   ];
 
   // Calculate pie segments
@@ -41,7 +57,7 @@ const ExpensePieChart = ({ data }) => {
       {/* Pie Chart */}
       <div className="relative w-48 h-48 mx-auto">
         <svg viewBox="0 0 100 100" className="transform -rotate-90 w-full h-full">
-          {segments.map((segment, index) => {
+          {segments.map((segment) => {
             const startX = 50 + 40 * Math.cos((segment.start * Math.PI) / 180);
             const startY = 50 + 40 * Math.sin((segment.start * Math.PI) / 180);
             const endX = 50 + 40 * Math.cos((segment.end * Math.PI) / 180);
@@ -60,14 +76,14 @@ const ExpensePieChart = ({ data }) => {
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            <div className="text-2xl font-bold text-gray-800">${total.toFixed(2)}</div>
-            <div className="text-sm text-gray-600">Total</div>
+            <div className="text-2xl font-bold text-white">${total.toFixed(2)}</div>
+            <div className="text-sm text-white opacity-80">Total</div>
           </div>
         </div>
       </div>
 
       {/* Legend */}
-      <div className="space-y-2 bg-white p-4 rounded-lg shadow-sm">
+      <div className="space-y-2 bg-background-alt p-4 rounded-lg">
         {segments.map((segment) => (
           <div key={segment.category} className="flex items-center justify-between py-1">
             <div className="flex items-center">
@@ -75,9 +91,9 @@ const ExpensePieChart = ({ data }) => {
                 className="w-4 h-4 rounded mr-2"
                 style={{ backgroundColor: segment.color }}
               ></div>
-              <span className="text-sm text-gray-800">{segment.category}</span>
+              <span className="text-sm text-white">{segment.category}</span>
             </div>
-            <div className="text-sm font-medium text-gray-800">
+            <div className="text-sm font-medium text-white">
               ${segment.total.toFixed(2)} ({segment.percentage.toFixed(1)}%)
             </div>
           </div>
