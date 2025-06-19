@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const defaultCategories = [
   'Food', 'Transport', 'Rent', 'Entertainment', 'Shopping', 'Healthcare', 'Education', 'Utilities', 'Other'
@@ -17,29 +17,41 @@ const categoryIcons = {
 };
 
 const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategories }) => {
-  const [form, setForm] = useState({
-    amount: initialData.amount || '',
-    category: initialData.category || categories[0],
-    description: initialData.description || '',
-    date: initialData.date ? initialData.date.slice(0, 10) : new Date().toISOString().slice(0, 10),
-    type: initialData.type || 'expense',
-  });
+  const [amount, setAmount] = useState(initialData.amount || '');
+  const [category, setCategory] = useState(initialData.category || categories[0]);
+  const [description, setDescription] = useState(initialData.description || '');
+  const [date, setDate] = useState(initialData.date ? initialData.date.slice(0, 10) : new Date().toISOString().slice(0, 10));
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(form);
-    // Reset form after submission
-    setForm({
-      amount: '',
-      category: categories[0],
-      description: '',
-      date: new Date().toISOString().slice(0, 10),
-      type: 'expense',
-    });
+    setError(null);
+    if (!amount || !category || !description || !date) {
+      setError('All fields are required.');
+      return;
+    }
+    setLoading(true);
+    try {
+      const result = await onSubmit({
+        amount: parseFloat(amount),
+        category,
+        description,
+        date
+      });
+      if (result && result.success) {
+        setAmount('');
+        setCategory(categories[0]);
+        setDescription('');
+        setDate(new Date().toISOString().slice(0, 10));
+      } else if (result && result.error) {
+        setError(result.error);
+      }
+    } catch (err) {
+      setError('Failed to add expense.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,8 +80,8 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
               <input 
                 type="number" 
                 name="amount" 
-                value={form.amount} 
-                onChange={handleChange} 
+                value={amount} 
+                onChange={e => setAmount(e.target.value)} 
                 required 
                 className="input-modern w-full pl-12 text-lg"
                 placeholder="0.00"
@@ -82,15 +94,16 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
             <div className="relative">
               <select 
                 name="type" 
-                value={form.type} 
-                onChange={handleChange} 
+                value={category} 
+                onChange={e => setCategory(e.target.value)} 
                 className="input-modern w-full pl-12 text-lg appearance-none cursor-pointer"
               >
-                <option value="expense" className="text-red-600">💸 Expense</option>
-                <option value="income" className="text-green-600">💰 Income</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat} className="text-red-600">💸 {cat}</option>
+                ))}
               </select>
               <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">
-                {form.type === 'expense' ? '💸' : '💰'}
+                {categoryIcons[category] || '📦'}
               </span>
               <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">▼</span>
             </div>
@@ -105,9 +118,9 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
               <button
                 key={cat}
                 type="button"
-                onClick={() => setForm({...form, category: cat})}
+                onClick={() => setCategory(cat)}
                 className={`p-4 rounded-2xl border-2 transition-all duration-300 group hover:scale-105 ${
-                  form.category === cat
+                  category === cat
                     ? 'border-blue-500 bg-gradient-to-r from-blue-50 to-purple-50 shadow-lg'
                     : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                 }`}
@@ -116,7 +129,7 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
                   {categoryIcons[cat] || '📦'}
                 </div>
                 <div className="text-xs font-semibold text-gray-700">{cat}</div>
-                {form.category === cat && (
+                {category === cat && (
                   <div className="absolute top-2 right-2 w-3 h-3 bg-blue-500 rounded-full"></div>
                 )}
               </button>
@@ -131,8 +144,8 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
             <input 
               type="text" 
               name="description" 
-              value={form.description} 
-              onChange={handleChange} 
+              value={description} 
+              onChange={e => setDescription(e.target.value)} 
               className="input-modern w-full pl-12 text-lg"
               placeholder="What was this transaction for?"
               required
@@ -150,8 +163,8 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
             <input 
               type="date" 
               name="date" 
-              value={form.date} 
-              onChange={handleChange} 
+              value={date} 
+              onChange={e => setDate(e.target.value)} 
               className="input-modern w-full pl-12 text-lg"
             />
             <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg">
@@ -163,12 +176,13 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
         {/* Submit Button */}
         <button 
           type="submit" 
+          disabled={loading}
           className="btn-primary w-full py-4 text-lg font-semibold relative overflow-hidden group"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           <span className="relative flex items-center justify-center space-x-2">
             <span>✨</span>
-            <span>Add Transaction</span>
+            <span>{loading ? 'Adding...' : 'Add Transaction'}</span>
           </span>
         </button>
       </form>

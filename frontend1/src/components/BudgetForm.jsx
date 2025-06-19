@@ -3,27 +3,47 @@ import useBudgetStore from '../store/useBudgetStore';
 
 const BudgetForm = () => {
   const [totalBudget, setTotalBudget] = useState('');
+  const [month, setMonth] = useState(new Date().toISOString().slice(0, 7)); // YYYY-MM format
   const { createBudget, loading, error } = useBudgetStore();
+  const [localError, setLocalError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!totalBudget) return;
-
+    setLocalError(null);
+    if (!totalBudget || isNaN(totalBudget) || Number(totalBudget) < 0) {
+      setLocalError('Please enter a valid budget amount.');
+      return;
+    }
     try {
-      const result = await createBudget({
-        totalBudget: parseFloat(totalBudget)
+      const result = await createBudget({ 
+        totalBudget: Number(totalBudget),
+        month: month
       });
-
-      if (result.success) {
+      if (result && result.success) {
         setTotalBudget('');
+      } else if (result && result.error) {
+        setLocalError(result.error);
       }
     } catch (err) {
-      console.error('Error setting budget:', err);
+      setLocalError('Failed to set budget.');
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label htmlFor="month" className="block text-white opacity-90 mb-2">
+          Budget Month
+        </label>
+        <input
+          type="month"
+          id="month"
+          value={month}
+          onChange={(e) => setMonth(e.target.value)}
+          className="input-modern w-full"
+          required
+        />
+      </div>
       <div>
         <label htmlFor="totalBudget" className="block text-white opacity-90 mb-2">
           Total Budget Amount
@@ -45,13 +65,11 @@ const BudgetForm = () => {
           />
         </div>
       </div>
-
-      {error && (
+      {(localError || error) && (
         <div className="text-error text-sm mt-2">
-          {error}
+          {localError || error}
         </div>
       )}
-
       <button
         type="submit"
         disabled={loading}

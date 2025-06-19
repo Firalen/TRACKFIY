@@ -24,7 +24,11 @@ const useBudgetStore = create((set) => ({
   createBudget: async (budgetData) => {
     set({ loading: true, error: null });
     try {
-      const budget = await budgetService.createBudget(budgetData);
+      // Send both totalBudget and month to the backend
+      const budget = await budgetService.createBudget({
+        totalBudget: budgetData.totalBudget,
+        month: budgetData.month
+      });
       set({ budget, loading: false });
       return { success: true };
     } catch (error) {

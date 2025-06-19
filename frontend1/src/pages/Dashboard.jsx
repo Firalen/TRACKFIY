@@ -13,7 +13,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
   const { budget, loading: budgetLoading, error: budgetError, fetchBudgets } = useBudgetStore();
-  const { expenses, loading: expensesLoading, error: expensesError, fetchExpenses } = useExpenseStore();
+  const { expenses, loading: expensesLoading, error: expensesError, fetchExpenses, createExpense } = useExpenseStore();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
@@ -114,7 +114,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div className="card-modern p-6">
           <h2 className="text-xl font-semibold mb-4 text-white">Add New Expense</h2>
-          <ExpenseForm />
+          <ExpenseForm onSubmit={createExpense} />
         </div>
         <div className="card-modern p-6">
           <h2 className="text-xl font-semibold mb-4 text-white">Recent Expenses</h2>
