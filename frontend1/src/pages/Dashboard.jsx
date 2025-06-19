@@ -110,12 +110,11 @@ const Dashboard = () => {
       {/* Header */}
       <div className="text-center mb-12 animate-slide-in-up">
         <div className="relative inline-block mb-6">
-          <h1 className="text-5xl font-bold gradient-text mb-4">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
             Financial Dashboard
           </h1>
-          <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 blur opacity-20"></div>
         </div>
-        <p className="text-white/80 text-lg">Track your expenses and manage your budget with smart insights</p>
+        <p className="text-gray-700 text-lg">Track your expenses and manage your budget with smart insights</p>
       </div>
 
       {/* Budget Section */}
@@ -129,8 +128,7 @@ const Dashboard = () => {
           onClick={() => setShowBudgetForm(!showBudgetForm)}
           className="btn-secondary px-8 py-4 text-lg font-semibold relative overflow-hidden group"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <span className="relative flex items-center space-x-2">
+          <span className="relative flex items-center space-x-2 text-gray-800">
             <span>{showBudgetForm ? '❌' : '💰'}</span>
             <span>{showBudgetForm ? 'Cancel' : 'Set Budget'}</span>
           </span>
@@ -141,12 +139,12 @@ const Dashboard = () => {
       {showBudgetForm && (
         <div className="card-modern p-8 animate-scale-in">
           <div className="flex items-center mb-6">
-            <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mr-4">
-              <span className="text-white text-2xl">📊</span>
+            <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center mr-4">
+              <span className="text-2xl">📊</span>
             </div>
             <div>
-              <h3 className="text-2xl font-bold gradient-text">Set Monthly Budget</h3>
-              <p className="text-gray-600">Define your spending limit for this month</p>
+              <h3 className="text-2xl font-bold text-gray-900">Set Monthly Budget</h3>
+              <p className="text-gray-700">Define your spending limit for this month</p>
             </div>
           </div>
           <form onSubmit={handleBudgetSubmit} className="flex flex-col lg:flex-row gap-4">
@@ -156,10 +154,10 @@ const Dashboard = () => {
                 value={budgetForm.totalBudget}
                 onChange={(e) => setBudgetForm({ totalBudget: e.target.value })}
                 placeholder="Enter budget amount"
-                className="input-modern w-full pl-12 text-lg"
+                className="input-modern w-full text-gray-900"
                 required
               />
-              <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">
+              <span className="input-icon">
                 💵
               </span>
             </div>
@@ -178,7 +176,7 @@ const Dashboard = () => {
 
       {/* Error Messages */}
       {(expenseError || budgetError) && (
-        <div className="card-modern p-6 border-l-4 border-red-500 animate-scale-in">
+        <div className="card-modern p-6 border-l-4 border-red-400 animate-scale-in bg-red-50">
           <div className="flex items-center space-x-3">
             <span className="text-red-500 text-2xl">⚠️</span>
             <div>
