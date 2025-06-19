@@ -16,8 +16,8 @@ const BudgetCard = ({ totalBudget, totalSpent, remaining }) => {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-2xl font-bold gradient-text mb-1">Monthly Budget</h2>
-            <p className="text-gray-600 text-sm">Track your spending progress</p>
+            <h2 className="text-2xl text-white font-bold gradient-text mb-1">Monthly Budget</h2>
+            <p className=" text-white text-xl text-sm">Track your spending progress</p>
           </div>
           <div className="relative">
             <div className="w-16 h-16 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-all duration-300 animate-pulse-glow">
