@@ -7,4 +7,9 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss()
   ],
+  preview: {
+    port: 4173,
+    host: true,
+    allowedHosts: ['trackfiy-1.onrender.com'], // <-- Add this line
+  },
 })
