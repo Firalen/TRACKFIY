@@ -26,7 +26,7 @@ const Navbar = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-300"></div>
             </div>
             <div className="flex flex-col">
-              <span className="text-3xl font-bold gradient-text">
+              <span className="text-3xl font-bold text-white">
                 Trackify
               </span>
               <span className="text-xs text-white/70 -mt-1">Smart Finance Tracking</span>
