@@ -74,7 +74,7 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
         {/* Amount and Type */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="block text-sm font-semibold text-gray-700">Amount</label>
+            <label className="block text-sm font-semibold text-white">Amount</label>
             <div className="relative">
               <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">💵</span>
               <input 
