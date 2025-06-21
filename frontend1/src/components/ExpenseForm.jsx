@@ -158,7 +158,7 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
 
         {/* Date */}
         <div className="space-y-2">
-          <label className="block text-sm font-semibold text-gray-700">Date</label>
+          <label className="block text-sm font-semibold text-white">Date</label>
           <div className="relative">
             <input 
               type="date" 
