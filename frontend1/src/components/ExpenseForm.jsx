@@ -112,7 +112,7 @@ const ExpenseForm = ({ onSubmit, initialData = {}, categories = defaultCategorie
 
         {/* Category */}
         <div className="space-y-4">
-          <label className="block text-sm font-semibold text-gray-700">Category</label>
+          <label className="block text-sm font-semibold text-white">Category</label>
           <div className="grid grid-cols-3 gap-3">
             {categories.map((cat) => (
               <button
