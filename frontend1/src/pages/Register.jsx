@@ -195,7 +195,7 @@ const Register = () => {
 
           {/* Benefits */}
           <div className="mt-8 pt-6 border-t border-gray-100">
-            <h4 className="text-center text-sm font-semibold text-gray-700 mb-4">Why choose Trackify?</h4>
+            <h4 className="text-center text-sm font-semibold text-white mb-4">Why choose Trackify?</h4>
             <div className="grid grid-cols-2 gap-4 text-center">
               <div className="space-y-2">
                 <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg flex items-center justify-center mx-auto">
