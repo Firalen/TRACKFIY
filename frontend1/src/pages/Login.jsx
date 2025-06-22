@@ -29,8 +29,8 @@ const Login = () => {
               </div>
               <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-25"></div>
             </div>
-            <h1 className="text-3xl font-bold gradient-text mb-2">Welcome Back!</h1>
-            <p className="text-gray-600">Sign in to your Trackify account</p>
+            <h1 className="text-3xl font-bold text-white mb-2">Welcome Back!</h1>
+            <p className="text-white">Sign in to your Trackify account</p>
           </div>
 
           {/* Error Message */}
@@ -46,7 +46,7 @@ const Login = () => {
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">
+              <label className="block text-sm font-semibold text-white">
                 Email Address
               </label>
               <div className="relative">
@@ -65,7 +65,7 @@ const Login = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">
+              <label className="block text-sm font-semibold text-white">
                 Password
               </label>
               <div className="relative">
@@ -114,11 +114,11 @@ const Login = () => {
 
           {/* Register Link */}
           <div className="text-center">
-            <p className="text-gray-600">
+            <p className="text-white">
               Don't have an account?{' '}
               <Link 
                 to="/register" 
-                className="gradient-text font-semibold hover:underline transition-all duration-200 hover:scale-105 inline-block"
+                className="text-white font-semibold hover:underline transition-all duration-200 hover:scale-105 inline-block"
               >
                 Create one now
               </Link>
@@ -132,19 +132,19 @@ const Login = () => {
                 <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg flex items-center justify-center mx-auto">
                   <span className="text-white text-sm">📊</span>
                 </div>
-                <p className="text-xs text-gray-600">Smart Analytics</p>
+                <p className="text-xs text-white">Smart Analytics</p>
               </div>
               <div className="space-y-2">
                 <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg flex items-center justify-center mx-auto">
                   <span className="text-white text-sm">🔒</span>
                 </div>
-                <p className="text-xs text-gray-600">Secure Data</p>
+                <p className="text-xs text-white">Secure Data</p>
               </div>
               <div className="space-y-2">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center mx-auto">
                   <span className="text-white text-sm">⚡</span>
                 </div>
-                <p className="text-xs text-gray-600">Real-time Sync</p>
+                <p className="text-xs text-white">Real-time Sync</p>
               </div>
             </div>
           </div>

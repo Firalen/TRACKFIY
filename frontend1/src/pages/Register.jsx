@@ -39,8 +39,8 @@ const Register = () => {
               </div>
               <div className="absolute -inset-2 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 rounded-3xl blur opacity-25"></div>
             </div>
-            <h1 className="text-3xl font-bold gradient-text mb-2">Join Trackify</h1>
-            <p className="text-gray-600">Create your account and start tracking your finances</p>
+            <h1 className="text-3xl font-bold text-white mb-2">Join Trackify</h1>
+            <p className="text-white">Create your account and start tracking your finances</p>
           </div>
 
           {/* Error Message */}
@@ -58,7 +58,7 @@ const Register = () => {
             {/* Name Fields */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700">First Name</label>
+                <label className="block text-sm font-semibold text-white">First Name</label>
                 <div className="relative">
                   <input 
                     type="text" 
@@ -75,7 +75,7 @@ const Register = () => {
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700">Last Name</label>
+                <label className="block text-sm font-semibold text-white">Last Name</label>
                 <div className="relative">
                   <input 
                     type="text" 
@@ -95,7 +95,7 @@ const Register = () => {
 
             {/* Username */}
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Username</label>
+              <label className="block text-sm font-semibold text-white">Username</label>
               <div className="relative">
                 <input 
                   type="text" 
@@ -114,7 +114,7 @@ const Register = () => {
 
             {/* Email */}
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Email Address</label>
+              <label className="block text-sm font-semibold text-white">Email Address</label>
               <div className="relative">
                 <input 
                   type="email" 
@@ -133,7 +133,7 @@ const Register = () => {
 
             {/* Password */}
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Password</label>
+              <label className="block text-sm font-semibold text-white">Password</label>
               <div className="relative">
                 <input 
                   type="password" 
