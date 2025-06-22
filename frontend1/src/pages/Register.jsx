@@ -213,13 +213,13 @@ const Register = () => {
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center mx-auto">
                   <span className="text-white text-sm">⚡</span>
                 </div>
-                <p className="text-xs text-gray-600">Real-time Sync</p>
+                <p className="text-xs text-white">Real-time Sync</p>
               </div>
               <div className="space-y-2">
                 <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center mx-auto">
                   <span className="text-white text-sm">🎯</span>
                 </div>
-                <p className="text-xs text-gray-600">Goal Tracking</p>
+                <p className="text-xs text-white">Goal Tracking</p>
               </div>
             </div>
           </div>
