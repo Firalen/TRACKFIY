@@ -207,7 +207,7 @@ const Register = () => {
                 <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-500 rounded-lg flex items-center justify-center mx-auto">
                   <span className="text-white text-sm">🔒</span>
                 </div>
-                <p className="text-xs text-gray-600">Secure Data</p>
+                <p className="text-xs text-white">Secure Data</p>
               </div>
               <div className="space-y-2">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center mx-auto">
