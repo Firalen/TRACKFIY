@@ -219,7 +219,7 @@ const Register = () => {
                 <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center mx-auto">
                   <span className="text-white text-sm">🎯</span>
                 </div>
-                <p className="text-xs text-gray-400">Goal Tracking</p>
+                <p className="text-xs text-gray-500">Goal Tracking</p>
               </div>
             </div>
           </div>
